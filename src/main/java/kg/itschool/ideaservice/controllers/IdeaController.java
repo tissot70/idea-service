@@ -22,8 +22,8 @@ public class IdeaController {
         return ideaService.save(ideaDTO);
     }
 
-    @GetMapping
+    /*@GetMapping("/getIdea")
     public List<IdeaDTO> getUserIdeas(@RequestParam String phone){
-        return null;
-    }
+        return ideaService.getUserIdeas(phone);
+    }*/
 }

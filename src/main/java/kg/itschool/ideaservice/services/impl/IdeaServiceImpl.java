@@ -7,6 +7,8 @@ import kg.itschool.ideaservice.models.entites.Idea;
 import kg.itschool.ideaservice.services.IdeaService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IdeaServiceImpl implements IdeaService {
 
@@ -23,4 +25,9 @@ public class IdeaServiceImpl implements IdeaService {
         idea = ideaRepo.save(idea);
         return IdeaMapper.INSTANCE.ideaToIdeaDTO(idea);
     }
+
+    /*@Override
+    public List<IdeaDTO> getUserIdeas(String phone) {
+        return null;
+    }*/
 }

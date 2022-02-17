@@ -9,7 +9,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface IdeaMapper {
     IdeaMapper INSTANCE= Mappers.getMapper(IdeaMapper.class);
-    @Mapping(source = "ideaDTO.phone",target = "idea.user.phone")
+
+    @Mapping(source = "ideaDTO.phone",target = "user.phone")
     Idea ideaDToToIdea(IdeaDTO ideaDTO);
+
     IdeaDTO ideaToIdeaDTO(Idea idea);
 }
