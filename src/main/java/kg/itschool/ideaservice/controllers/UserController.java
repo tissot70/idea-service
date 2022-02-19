@@ -20,8 +20,8 @@ public class UserController {
         return userService.save(userDTO);
     }
 
-    /*@PostMapping("/confirm")
+    @PostMapping("/confirm")
     public String confirmUserCode(@RequestBody UserConfirmDTO userConfirmDTO){
         return userService.confirm(userConfirmDTO);
-    }*/
+    }
 }

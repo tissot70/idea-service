@@ -16,10 +16,11 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
     String name;
     String phone;
     LocalDate addDate;
     String code;
     boolean activated;
 }
+

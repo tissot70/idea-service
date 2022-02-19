@@ -8,9 +8,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IdeaDTO {
+public class UserIdeasDTO {
     String title;
-    String text;
-    boolean contactWithMe;
-    String phone;
+    String body;
+    String contactWithMe;
 }

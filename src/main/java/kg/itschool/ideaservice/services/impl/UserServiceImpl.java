@@ -1,16 +1,17 @@
 package kg.itschool.ideaservice.services.impl;
 
 import kg.itschool.ideaservice.dao.UserRepo;
+import kg.itschool.ideaservice.exceptions.CodeDoesNotMatch;
 import kg.itschool.ideaservice.exceptions.UserAlreadyExist;
 import kg.itschool.ideaservice.mappers.UserMapper;
 import kg.itschool.ideaservice.models.dto.UserConfirmDTO;
 import kg.itschool.ideaservice.models.dto.UserDTO;
+import kg.itschool.ideaservice.models.dto.UserResponse;
 import kg.itschool.ideaservice.models.entites.User;
 import kg.itschool.ideaservice.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,24 +24,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String save(UserDTO userDTO) {
-        User user = UserMapper.INSTANCE.userDToToUser(userDTO);
-        try {
-            if (Objects.isNull(userRepo.findByPhoneAndName(user.getPhone(),user.getName()))){
-                user.setActivated(false);
-                user.setAddDate(LocalDate.now());
-                user = userRepo.save(user);
-            }else {
+        boolean exist = userRepo.existsByPhone(userDTO.getPhone());
+        if (exist){
                 throw new UserAlreadyExist("такой пользователь уже есть");
-            }
-        } catch (UserAlreadyExist e) {
-            e.getMessage();
         }
+        User user =UserMapper.INSTANCE.userDToToUser(userDTO);
         int randomCode = 999 + (int)(Math.random() * ((9999 - 999) + 1));
-        return "ваш код подтверждения"+String.valueOf(randomCode);
+        user.setCode(String.valueOf(randomCode));
+        user.setActivated(false);
+        user.setAddDate(LocalDate.now());
+        user =userRepo.saveAndFlush(user);
+        return "ваш код подтверждения-"+user.getCode();
     }
 
-    /*@Override
+    @Override
     public String confirm(UserConfirmDTO userConfirmDTO) {
-        return null;
-    }*/
+        User user = userRepo.findByPhone(userConfirmDTO.getPhone());
+        if (!user.getCode().equals(userConfirmDTO.getCode())){
+            throw new CodeDoesNotMatch("код не совпадает");
+        }
+        user.setActivated(true);
+        userRepo.saveAndFlush(user);
+        return "регистрация прошла успешно";
+    }
+
+    @Override
+    public UserResponse findByPhoneNumber(String phone) {
+        return UserMapper.INSTANCE.userToUserResponse(userRepo.findByPhone(phone));
+    }
 }

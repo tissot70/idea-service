@@ -1,7 +1,7 @@
 package kg.itschool.ideaservice.controllers;
 
 import kg.itschool.ideaservice.models.dto.IdeaDTO;
-import kg.itschool.ideaservice.models.entites.Idea;
+import kg.itschool.ideaservice.models.dto.UserIdeasDTO;
 import kg.itschool.ideaservice.services.IdeaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +13,7 @@ public class IdeaController {
 
     private IdeaService ideaService;
 
+
     public IdeaController(IdeaService ideaService) {
         this.ideaService = ideaService;
     }
@@ -23,7 +24,7 @@ public class IdeaController {
     }
 
     /*@GetMapping("/getIdea")
-    public List<IdeaDTO> getUserIdeas(@RequestParam String phone){
+    public List<UserIdeasDTO> getUserIdeas(@RequestParam String phone){
         return ideaService.getUserIdeas(phone);
     }*/
 }
